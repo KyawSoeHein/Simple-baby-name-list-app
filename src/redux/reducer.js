@@ -10,7 +10,10 @@ const babySlice = createSlice({
   initialState,
   reducers: {
     _addNewBaby: (state, action) => {
-      state.baby_list = [...action.payload];
+      state.baby_list = [
+        ...state.baby_list,
+        { name: action.payload.trim(), strike: false, date: Date.now() },
+      ];
     },
   },
 });

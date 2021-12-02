@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import "../Home.css";
 
 //redux
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { _addNewBaby } from "../redux/reducer";
 
 //materialUI
 import List from "@mui/material/List";
@@ -20,12 +21,31 @@ import DialogTitle from "@mui/material/DialogTitle";
 
 const Home = () => {
   const dense = useSelector((state) => state.baby_list);
+  const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
+  const [error, setError] = useState({ status: false, msg: "" });
 
   function _handleDialog(action) {
+    if (action === 1) {
+      if (name.length === 0) {
+        setError({ status: true, msg: "Name can't be blank" });
+        return;
+      } else {
+        callReduxToAddNewBaby();
+      }
+    }
     setOpen(!open);
+    setError({ status: false, msg: "" });
+  }
+
+  function callReduxToAddNewBaby() {
+    dispatch(_addNewBaby(name));
+
+    if (error.status === true) {
+      setError({ status: false, msg: "" });
+    }
   }
 
   return (
@@ -91,6 +111,8 @@ const Home = () => {
             Add a child name which is not blank and no longer than two phrases.
           </DialogContentText>
           <TextField
+            error={error.status}
+            helperText={error.msg}
             autoFocus
             margin="dense"
             id="name"
