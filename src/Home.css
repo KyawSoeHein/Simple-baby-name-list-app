@@ -5,3 +5,7 @@
   align-items: center;
   padding-top: 30px;
 }
+
+.crossed-line {
+  text-decoration: line-through;
+}
