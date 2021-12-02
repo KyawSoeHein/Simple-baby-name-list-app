@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import demo from "../demo";
 
 const initialState = {
-  baby_list: [],
+  baby_list: demo,
 };
 
 const babySlice = createSlice({
